@@ -1,0 +1,42 @@
+import math
+import os
+import random
+import re
+import sys
+def twoStacks(maxSum, a, b):
+    n, m = len(a), len(b)
+    i, j = 0, 0
+    current_sum = 0
+    max_score = 0
+
+    while i < n and current_sum + a[i] <= maxSum:
+        current_sum += a[i]
+        i += 1
+
+    max_score = i  
+
+    while j < m:
+        current_sum += b[j]
+        j += 1
+        
+        while current_sum > maxSum and i > 0:
+            i -= 1
+            current_sum -= a[i]
+        
+        if current_sum <= maxSum:
+            max_score = max(max_score, i + j)
+    
+    return max_score
+
+def main():
+    t = int(input())
+    for _ in range(t):
+        n, m, maxSum = map(int, input().split())
+        a = list(map(int, input().split()))
+        b = list(map(int, input().split()))
+        
+        result = twoStacks(maxSum, a, b)
+        print(result)
+
+if __name__ == "__main__":
+    main()
