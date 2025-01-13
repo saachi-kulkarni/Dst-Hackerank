@@ -1,0 +1,60 @@
+class TwoStack_Queue:
+    def __init__(self):
+        self.p_stack = []  
+        self.s_stack = [] 
+
+    def insert(self, value):
+        self.p_stack.append(value)
+
+    def delete(self):
+        if not self.s_stack:
+            while self.p_stack:
+                self.s_stack.append(self.p_stack.pop())
+
+        if not self.s_stack:
+            raise RuntimeError("Trying to delete from an empty queue")
+
+        return self.s_stack.pop()
+
+    def viewfront(self):
+        if not self.s_stack:
+            while self.p_stack:
+                self.s_stack.append(self.p_stack.pop())
+
+        if not self.s_stack:
+            raise RuntimeError("Trying to view from front of an empty queue")
+
+        return self.s_stack[-1]
+
+def handle_queries(query_list):
+    queue = TwoStack_Queue()
+    outputs = []
+
+    for query in query_list:
+        parts = query.split()
+        operation = int(parts[0])
+
+        if operation == 1:  
+            value = int(parts[1])
+            queue.insert(value)
+        elif operation == 2:  
+            queue.delete()
+        elif operation == 3:  
+            outputs.append(queue.viewfront())
+
+    return outputs
+
+queries = []
+print("Enter all the queries and then Press Enter on an empty line when done:")
+while True:
+    query = input().strip()
+    if not query: 
+        break
+    queries.append(query)
+
+
+results = handle_queries(queries)
+
+print("\nOutput:")
+for i in results:
+    print(i)
