@@ -1,0 +1,19 @@
+def is_balanced(brackets):
+    stack = []
+    bracket_mapping = {')': '(', '}': '{', ']': '['}
+    
+    for char in brackets:
+        if char in bracket_mapping.values():
+            stack.append(char)
+        elif char in bracket_mapping.keys():
+            if stack and stack[-1] == bracket_mapping[char]:
+                stack.pop()
+            else:
+                return False
+    return not stack
+
+input_str = input("Enter a string with brackets: ")
+if is_balanced(input_str):
+    print("The brackets are balanced.")
+else:
+    print("The brackets are not balanced.")
